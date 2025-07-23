@@ -21,9 +21,9 @@ jobs:
           port: 22
           script: |
             # IMPORTANT: Change this line to your project's folder name on the server!
-            cd fresh-face
-            
+            cd freshfaceec2
             git pull origin main
+            cd fresh-face
             npm install
             npm run build
             pm2 reload next-app
