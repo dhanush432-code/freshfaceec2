@@ -1,0 +1,29 @@
+# Name of the workflow
+name: Deploy Next.js to EC2
+
+on:
+  push:
+    branches: [ main ]
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: 22
+          script: |
+            # IMPORTANT: Change this line to your project's folder name on the server!
+            cd fresh-face
+            
+            git pull origin main
+            npm install
+            npm run build
+            pm2 reload next-app
